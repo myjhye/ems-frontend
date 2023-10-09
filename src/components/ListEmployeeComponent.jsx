@@ -18,23 +18,23 @@ export default function ListEmployeeComponents() {
 
     return (
         <div className="container">
-            <h2 className="text-center">List of Employees</h2>
+            <h2 className="text-center mt-5 mb-3">직원 리스트</h2>
             <table className="table table-striped table-bordered">
             <thead>
                 <tr>
-                <th>Id</th>
-                <th>First Name</th>
-                <th>Last Name</th>
-                <th>Email Id</th>
+                    <th className="text-center">Id</th>
+                    <th className="text-center">First Name</th>
+                    <th className="text-center">Last Name</th>
+                    <th className="text-center">Email Id</th>
                 </tr>
             </thead>
             <tbody>
                 {employees.map((emp) => (
                 <tr key={emp.id}>
-                    <td>{emp.id}</td>
-                    <td>{emp.firstName}</td>
-                    <td>{emp.lastName}</td>
-                    <td>{emp.email}</td>
+                    <td className="text-center">{emp.id}</td>
+                    <td className="text-center">{emp.firstName}</td>
+                    <td className="text-center">{emp.lastName}</td>
+                    <td className="text-center">{emp.email}</td>
                 </tr>
                 ))}
             </tbody>
