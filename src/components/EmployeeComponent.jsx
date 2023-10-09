@@ -11,53 +11,83 @@ export default function EmployeeComponent() {
     const navigate = useNavigate();
     
 
-    // 이메일 유효성 검사
-    function isValidEmail(email) {
-        const emailRegex = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/;
+    const [errors, setErrors] = useState({
+        firstName: '',
+        lastName: '',
+        email: '',
+    })
 
+    const [errorEmail, setErrorEmail] = useState('');
+
+
+
+    // 값 입력 유효성 검사
+    function emptyValidateForm() {
+
+        let valid = true;
+
+        const errorsCopy = {
+            ...errors
+        }
+
+        if (firstName.trim()) {
+            errorsCopy.firstName = '';
+        } else {
+            errorsCopy.firstName = '이름을 입력하세요';
+            valid = false;
+        }
+
+        if (lastName.trim()) {
+            errorsCopy.lastName = '';
+        } else {
+            errorsCopy.lastName = '성을 입력하세요';
+        }
+
+        if (email.trim()) {
+            errorsCopy.email = '';
+        } else {
+            errorsCopy.email = '이메일을 입력하세요';
+        }
+
+        setErrors(errorsCopy);
+
+        return valid;
+    }
+
+
+
+    // 이메일 형식 유효성 검사 
+    function emailValidateForm(email) {
+        const emailRegex = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/;
         return emailRegex.test(email);
     }
 
 
 
+
     // 직원 등록 핸들러
     function saveEmployee(e) {
-
         e.preventDefault();
 
-        if (!firstName) {
-            alert('이름을 입력하세요')
-            return;
+        if (emptyValidateForm()) {
+            if (emailValidateForm(email)) {
+                const employee = { firstName, lastName, email };
+
+                // 직원 등록
+                createEmployee(employee)
+                    .then((res) => {
+                        console.log(res.data);
+                        navigate('/employees');
+                    });
+            } else {
+                setErrorEmail('올바른 이메일 형식을 입력하세요')
+            }
         }
-
-        if (!lastName) {
-            alert('성을 입력하세요')
-            return;
-        }
-
-        if (!email) {
-            alert('이메일을 입력하세요')
-            return;
-        }
-
-        if (!isValidEmail(email)) {
-            alert('유효한 이메일 주소를 입력하세요');
-            return;
-        }
-
-        const employee = {firstName, lastName, email}
-
-        // 직원 등록
-        createEmployee(employee)
-            .then((res) => {
-                console.log(res.data);
-                navigate('/employees');
-            })
-        
     }
 
 
-    
+
+
     return (
         <div className="container">
             <div className="row">
@@ -72,9 +102,10 @@ export default function EmployeeComponent() {
                                     placeholder="이름 입력" 
                                     name='firstName' 
                                     value={firstName}
-                                    className="form-control mb-4"
+                                    className={`form-control mb-4 ${errors.firstName ? 'is-invalid' : ''}`}
                                     onChange={(e) => setFirstName(e.target.value)}
                                 />
+                                { errors.firstName && <p className="invalid-feedback">{errors.firstName}</p>}
                             </div>
                             <div className="form-group mb-2">
                                 <label className="form-label">Last Name</label>
@@ -83,9 +114,10 @@ export default function EmployeeComponent() {
                                     placeholder="성 입력" 
                                     name='lastName' 
                                     value={lastName}
-                                    className="form-control mb-4"
+                                    className={`form-control mb-4 ${errors.lastName ? 'is-invalid' : ''}`}
                                     onChange={(e) => setLastName(e.target.value)}
                                 />
+                                { errors.lastName && <p className="invalid-feedback">{errors.lastName}</p>}
                             </div>
                             <div className="form-group mb-2">
                                 <label className="form-label">Email</label>
@@ -94,9 +126,13 @@ export default function EmployeeComponent() {
                                     placeholder="이메일 입력" 
                                     name='email' 
                                     value={email}
-                                    className="form-control mb-4"
+                                    className={`form-control mb-4 ${errors.email ? 'is-invalid' : ''}`}
                                     onChange={(e) => setEmail(e.target.value)}
                                 />
+                                {/* 에러 - 입력 칸이 공백일 때 */}
+                                { errors.email && <p className="text-danger">{errors.email}</p> }
+                                {/* 에러 - 이메일 형식이 맞지 않을 때 */}
+                                { email && errorEmail && <p className="text-danger">{errorEmail}</p>}
                             </div>
                             <button 
                                 className="btn btn-success"  
