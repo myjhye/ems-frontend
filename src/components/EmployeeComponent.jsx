@@ -49,6 +49,9 @@ export default function EmployeeComponent() {
 
 
 
+
+
+
     // 값 입력 유효성 검사
     function emptyValidateForm() {
 
@@ -84,6 +87,8 @@ export default function EmployeeComponent() {
 
 
 
+    
+
     // 이메일 형식 유효성 검사 
     function emailValidateForm(email) {
         const emailRegex = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/;
@@ -116,6 +121,7 @@ export default function EmployeeComponent() {
 
 
 
+    // 등록 & 수정 화면 별로 타이틀 다르게 설정
     function pageTitle() {
         
         if (id) {
