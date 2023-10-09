@@ -12,7 +12,7 @@ export const listEmployees = () => {
 
 // 단일 직원 조회
 export const getEmployees = (employeeId) => {
-    axios.get(REST_API_BASE_URL + '/' + employeeId);
+    return axios.get(REST_API_BASE_URL + '/' + employeeId);
 }
 
 
@@ -23,3 +23,9 @@ export const createEmployee = (employee) => {
 }
 
 
+
+
+// 직원 수정
+export const updateEmployee = (employeeId, employee) => {
+    return axios.put(REST_API_BASE_URL + '/' + employeeId, employee);
+}

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { createEmployee, getEmployees } from "../services/EmployeeService";
+import { createEmployee, getEmployees, updateEmployee } from "../services/EmployeeService";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 
 export default function EmployeeComponent() {
@@ -24,12 +24,9 @@ export default function EmployeeComponent() {
 
 
 
-    // 입력 필드에 초기 값 설정
-
-    // 컴포넌트 초기 마운트 & id 변경 시 실행
+    // 입력 필드에 초기 값 설정 -> 수정 모드
     useEffect(() => {
 
-        // id가 있으면 -> 수정 모드
         if (id) {
 
             // 해당 직원 정보를 서버에서 가져옴 
@@ -45,6 +42,8 @@ export default function EmployeeComponent() {
                     console.error(error);
                 })
         }
+
+    // 컴포넌트 초기 마운트 & id 변경 시 실행
     }, [id]);
 
 
@@ -87,7 +86,7 @@ export default function EmployeeComponent() {
 
 
 
-    
+
 
     // 이메일 형식 유효성 검사 
     function emailValidateForm(email) {
@@ -98,20 +97,41 @@ export default function EmployeeComponent() {
 
 
 
-    // 직원 등록 핸들러
-    function saveEmployee(e) {
+    // 직원 등록 & 수정 핸들러
+    function saveOrUpdateEmployee(e) {
         e.preventDefault();
 
         if (emptyValidateForm()) {
             if (emailValidateForm(email)) {
+
                 const employee = { firstName, lastName, email };
+                
+
+                // 직원 수정
+                if(id) {
+
+                    updateEmployee(id, employee)
+                        .then((res) => {
+                            console.log(res.data);
+                            navigate('/employees');
+                        })
+
 
                 // 직원 등록
-                createEmployee(employee)
-                    .then((res) => {
-                        console.log(res.data);
-                        navigate('/employees');
-                    });
+                } else {
+
+                    createEmployee(employee)
+                        .then((res) => {
+                            console.log(res.data);
+                            navigate('/employees');
+                        })
+                        .catch(error => {
+                            console.error(error);
+                        })
+                }
+
+
+
             } else {
                 setErrorEmail('올바른 이메일 형식을 입력하세요')
             }
@@ -185,7 +205,7 @@ export default function EmployeeComponent() {
                             <button 
                                 className="btn btn-success"  
                                 style={{ width: '100%' }} 
-                                onClick={saveEmployee}
+                                onClick={saveOrUpdateEmployee}
                             >
                                 등록
                             </button>
