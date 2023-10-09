@@ -29,3 +29,11 @@ export const createEmployee = (employee) => {
 export const updateEmployee = (employeeId, employee) => {
     return axios.put(REST_API_BASE_URL + '/' + employeeId, employee);
 }
+
+
+
+
+// 직원 삭제
+export const deleteEmployee = (employeeId) => {
+    return axios.delete(REST_API_BASE_URL + '/' + employeeId);
+}

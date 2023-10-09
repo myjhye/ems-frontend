@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 import { createEmployee, getEmployees, updateEmployee } from "../services/EmployeeService";
-import { useLocation, useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 export default function EmployeeComponent() {
 
