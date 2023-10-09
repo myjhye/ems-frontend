@@ -9,8 +9,17 @@ export const listEmployees = () => {
 }
 
 
+
+// 단일 직원 조회
+export const getEmployees = (employeeId) => {
+    axios.get(REST_API_BASE_URL + '/' + employeeId);
+}
+
+
+
 // 직원 등록
 export const createEmployee = (employee) => {
     return axios.post(REST_API_BASE_URL, employee);
 }
+
 

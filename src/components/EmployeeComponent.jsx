@@ -1,5 +1,5 @@
-import { useState } from "react"
-import { createEmployee } from "../services/EmployeeService";
+import { useEffect, useState } from "react"
+import { createEmployee, getEmployees } from "../services/EmployeeService";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 
 export default function EmployeeComponent() {
@@ -19,6 +19,33 @@ export default function EmployeeComponent() {
     })
 
     const [errorEmail, setErrorEmail] = useState('');
+
+
+
+
+
+    // 입력 필드에 초기 값 설정
+
+    // 컴포넌트 초기 마운트 & id 변경 시 실행
+    useEffect(() => {
+
+        // id가 있으면 -> 수정 모드
+        if (id) {
+
+            // 해당 직원 정보를 서버에서 가져옴 
+            getEmployees(id)
+                .then((res) => {
+
+                    // 서버에서 받아온 직원 정보를 각 입력 필드의 초기 값으로 설정
+                    setFirstName(res.data.firstName);
+                    setLastName(res.data.lastName);
+                    setEmail(res.data.email);
+                })
+                .catch(error => {
+                    console.error(error);
+                })
+        }
+    }, [id]);
 
 
 
