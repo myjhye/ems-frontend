@@ -12,11 +12,16 @@ function App() {
       <BrowserRouter>
           <HeaderComponent />
               <Routes>
+                  {/* 직원 목록 */}
                   <Route path='/' element={ <ListEmployeeComponents /> }></Route>
                   <Route path='/employees' element={ <ListEmployeeComponents /> }></Route>
+                  
+                  {/* 직원 등록 */}
                   <Route path='/add-employee' element={ <EmployeeComponent /> }></Route>
+                  
+                  {/* 직원 수정 */}
+                  <Route path='/edit-employee/:id' element={ <EmployeeComponent /> }></Route>
               </Routes>
-          <FooterComponent />
       </BrowserRouter>
     </>
   )
