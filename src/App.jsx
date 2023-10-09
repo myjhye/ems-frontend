@@ -1,3 +1,4 @@
+import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import './App.css'
 import FooterComponent from './components/FooterComponent'
 import HeaderComponent from './components/HeaderComponent'
@@ -7,9 +8,14 @@ function App() {
 
   return (
     <>
-      <HeaderComponent />
-      <ListEmployeeComponents />
-      <FooterComponent />
+      <BrowserRouter>
+          <HeaderComponent />
+              <Routes>
+                  <Route path='/' element={ <ListEmployeeComponents /> }></Route>
+                  <Route path='/employees' element={ <ListEmployeeComponents /> }></Route>
+              </Routes>
+          <FooterComponent />
+      </BrowserRouter>
     </>
   )
 }
