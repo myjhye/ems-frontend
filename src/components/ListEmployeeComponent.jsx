@@ -28,14 +28,18 @@ export default function ListEmployeeComponents() {
 
     // 직원 삭제 핸들러
     function removeEmployee(id) {
-        deleteEmployee(id)
-            .then((res) => {
-                console.log(res.data);
-                getAllEmployees();
-            })
-            .catch(error => {
-                console.error(error);
-            })
+
+        if (window.confirm('삭제하시겠습니까?')) {
+            
+            deleteEmployee(id)
+                .then((res) => {
+                    console.log(res.data);
+                    getAllEmployees();
+                })
+                .catch(error => {
+                    console.error(error);
+                })
+        }
     }
 
     return (

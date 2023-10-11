@@ -4,6 +4,7 @@ import FooterComponent from './components/FooterComponent'
 import HeaderComponent from './components/HeaderComponent'
 import ListEmployeeComponents from './components/ListEmployeeComponent'
 import EmployeeComponent from './components/EmployeeComponent'
+import ListDepartmentComponent from './components/ListDepartmentComponent'
 
 function App() {
 
@@ -21,6 +22,9 @@ function App() {
                   
                   {/* 직원 수정 */}
                   <Route path='/edit-employee/:id' element={ <EmployeeComponent /> }></Route>
+                  
+                  {/* 부서 목록 */}
+                  <Route path='/departments' element={ <ListDepartmentComponent /> }></Route>
               </Routes>
       </BrowserRouter>
     </>
