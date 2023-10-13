@@ -1,10 +1,11 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import './App.css'
-import FooterComponent from './components/FooterComponent'
+import ListDepartmentComponent from './pages/ListDepartmentComponent'
+import EmployeeComponent from './pages/EmployeeComponent'
+import ListEmployeeComponents from './pages/ListEmployeeComponent'
 import HeaderComponent from './components/HeaderComponent'
-import ListEmployeeComponents from './components/ListEmployeeComponent'
-import EmployeeComponent from './components/EmployeeComponent'
-import ListDepartmentComponent from './components/ListDepartmentComponent'
+import DepartmentComponent from './pages/DepartmentComponent'
+
 
 function App() {
 
@@ -25,6 +26,9 @@ function App() {
                   
                   {/* 부서 목록 */}
                   <Route path='/departments' element={ <ListDepartmentComponent /> }></Route>
+                  
+                  {/* 부서 등록 */}
+                  <Route path='/add-department' element={ <DepartmentComponent /> }></Route>
               </Routes>
       </BrowserRouter>
     </>
