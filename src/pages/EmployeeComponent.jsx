@@ -7,20 +7,16 @@ export default function EmployeeComponent() {
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
     const [email, setEmail] = useState('');
-
-    const navigate = useNavigate();
-    const { id } = useParams();
-
-
     const [errors, setErrors] = useState({
         firstName: '',
         lastName: '',
         email: '',
     })
-
     const [errorEmail, setErrorEmail] = useState('');
 
 
+    const navigate = useNavigate();
+    const { id } = useParams();
 
 
 
