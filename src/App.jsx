@@ -14,6 +14,8 @@ function App() {
       <BrowserRouter>
           <HeaderComponent />
               <Routes>
+                  
+                  
                   {/* 직원 목록 */}
                   <Route path='/' element={ <ListEmployeeComponents /> }></Route>
                   <Route path='/employees' element={ <ListEmployeeComponents /> }></Route>
@@ -23,12 +25,20 @@ function App() {
                   
                   {/* 직원 수정 */}
                   <Route path='/edit-employee/:id' element={ <EmployeeComponent /> }></Route>
+
+
+
+
                   
                   {/* 부서 목록 */}
                   <Route path='/departments' element={ <ListDepartmentComponent /> }></Route>
                   
                   {/* 부서 등록 */}
                   <Route path='/add-department' element={ <DepartmentComponent /> }></Route>
+
+                  {/* 부서 수정 */}
+                  <Route path='/edit-department/:id' element={ <DepartmentComponent /> }></Route>
+
               </Routes>
       </BrowserRouter>
     </>
