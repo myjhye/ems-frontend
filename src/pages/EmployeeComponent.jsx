@@ -8,13 +8,15 @@ export default function EmployeeComponent() {
   const [department, setDepartment] = useState('');
   const [departments, setDepartments] = useState([]);
   const [email, setEmail] = useState('');
-  const [emailDomain, setEmailDomain] = useState('google.com');
+  const [emailDomain, setEmailDomain] = useState('');
   const [errors, setErrors] = useState({
     fullName: '',
     department: '',
     email: '',
   });
   const [errorEmail, setErrorEmail] = useState('');
+
+  const emailDomains = ["google.com", "yahoo.com", "naver.com", "example.com", "직접 입력"];
 
   const navigate = useNavigate();
   const { id } = useParams();
@@ -25,19 +27,35 @@ export default function EmployeeComponent() {
       // 해당 직원 정보를 서버에서 가져옴
       getEmployees(id)
         .then((res) => {
+          
           // 서버에서 받아온 직원 정보를 각 입력 필드의 초기 값으로 설정
           setFullName(res.data.fullName);
           setDepartment(res.data.department);
-          // 기존 이메일 주소에서 "@" 이전 부분만 추출하여 설정
+          
+          // "@" 이전 부분 추출
           const emailParts = res.data.email.split('@');
-          setEmail(emailParts[0]);
-          setEmailDomain(emailParts[1]);
+
+
+          // 도메인 값이 옵션에 없으면 -> 이메일 전체 출력 & 도메인을 '직접 입력'으로 설정
+          if (!emailDomains.includes(emailParts[1])) {
+            setEmail(res.data.email);
+            setEmailDomain('직접 입력');
+          
+          // 도메인 값이 옵션에 있으면 -> 이메일 "@" 이전 부분 + 이메일 "@" 이후 부분
+          } else {
+            setEmail(emailParts[0]);
+            setEmailDomain(emailParts[1]);
+          }
         })
         .catch(error => {
           console.error(error);
         });
     }
   }, [id]);
+
+
+
+
 
 
   // 부서 데이터 읽어오기 -> 부서 필드 값
@@ -206,10 +224,11 @@ export default function EmployeeComponent() {
                     className="form-control"
                     onChange={(e) => setEmailDomain(e.target.value)}
                   >
-                    <option value="google.com">google.com</option>
-                    <option value="yahoo.com">yahoo.com</option>
-                    <option value="example.com">example.com</option>
-                    <option value="직접 입력">직접 입력</option> {/* '직접 입력' 옵션 추가 */}
+                    {emailDomains.map((domain) => (
+                      <option key={domain} value={domain}>
+                        {domain}
+                      </option>
+                    ))}
                   </select>
                 </div>
                 {/* 에러 - 입력 칸이 공백일 때 */}
