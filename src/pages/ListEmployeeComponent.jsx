@@ -56,8 +56,8 @@ export default function ListEmployeeComponents() {
                 <thead>
                     <tr>
                         <th >Id</th>
-                        <th>First Name</th>
-                        <th>Last Name</th>
+                        <th>이름</th>
+                        <th>부서</th>
                         <th>Email Id</th>
                         <th>기능</th>
                     </tr>
@@ -71,9 +71,9 @@ export default function ListEmployeeComponents() {
                         employees.map((emp) => (
                             <tr key={emp.id}>
                                 <td>{emp.id}</td>
-                                <td>{emp.firstName}</td>
-                                <td>{emp.lastName}</td>
-                                <td>{emp.email}</td>
+                                <td>{emp.fullName}</td>
+                                <td>{emp.department}</td>
+                                <td>{emp.email}</td >
                                 <td>
                                     <button 
                                         className="btn btn-info" 
