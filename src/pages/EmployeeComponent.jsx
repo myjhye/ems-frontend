@@ -141,7 +141,7 @@ export default function EmployeeComponent() {
 
 
 
-    // 등록 & 수정 화면 별로 타이틀 다르게 설정
+    // 등록 & 수정 화면 별로 타이틀 헤더 설정
     function pageTitle() {
         
         if (id) {

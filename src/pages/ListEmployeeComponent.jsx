@@ -55,25 +55,25 @@ export default function ListEmployeeComponents() {
             <table className="table table-striped table-bordered">
                 <thead>
                     <tr>
-                        <th className="text-center">Id</th>
-                        <th className="text-center">First Name</th>
-                        <th className="text-center">Last Name</th>
-                        <th className="text-center">Email Id</th>
-                        <th className="text-center">기능</th>
+                        <th >Id</th>
+                        <th>First Name</th>
+                        <th>Last Name</th>
+                        <th>Email Id</th>
+                        <th>기능</th>
                     </tr>
                 </thead>
                 <tbody>
                     {employees.length === 0 ? (
                         <tr>
-                            <td colSpan="5" className="text-center">등록된 직원이 없습니다.</td>
+                            <td colSpan="5" >등록된 직원이 없습니다.</td>
                         </tr>
                     ) : (
                         employees.map((emp) => (
                             <tr key={emp.id}>
-                                <td className="text-center">{emp.id}</td>
-                                <td className="text-center">{emp.firstName}</td>
-                                <td className="text-center">{emp.lastName}</td>
-                                <td className="text-center">{emp.email}</td>
+                                <td>{emp.id}</td>
+                                <td>{emp.firstName}</td>
+                                <td>{emp.lastName}</td>
+                                <td>{emp.email}</td>
                                 <td>
                                     <button 
                                         className="btn btn-info" 

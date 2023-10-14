@@ -3,14 +3,14 @@ import axios from "axios";
 const REST_API_BASE_URL = 'http://localhost:8080/api/employees';
 
 
-// 전체 직원 조회
+// 직원 조회 -> 전체
 export const listEmployees = () => {
     return axios.get(REST_API_BASE_URL);
 }
 
 
 
-// 단일 직원 조회
+// 직원 조회 -> 단일
 export const getEmployees = (employeeId) => {
     return axios.get(REST_API_BASE_URL + '/' + employeeId);
 }
