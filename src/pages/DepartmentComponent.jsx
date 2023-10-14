@@ -6,6 +6,11 @@ export default function DepartmentComponent() {
 
     const [departmentName, setDepartmentName] = useState('');
     const [departmentDescription, setDepartmentDescription] = useState('');
+    const [errors, setErrors] = useState({
+        departmentName: '',
+        departmentDescription: '',
+    })
+
 
     const navigate = useNavigate();
     const { id } = useParams();
@@ -37,6 +42,38 @@ export default function DepartmentComponent() {
 
 
 
+    
+    // 값 입력 유효성 검사
+    function emptyValidationForm() {
+
+        let valid = true;
+
+        const errorsCopy = {
+            ...errors
+        }
+
+        if (departmentName.trim()) {
+            errorsCopy.departmentName = '';
+        } else {
+            errorsCopy.departmentName = '부서 이름을 입력하세요';
+            valid = false;
+        }
+
+        if (departmentDescription.trim()) {
+            errorsCopy.departmentDescription = '';
+        } else {
+            errorsCopy.departmentDescription = '부서 설명을 입력하세요';
+            valid = false;
+        }
+
+        setErrors(errorsCopy);
+
+        return valid;
+
+    }
+
+
+
     // 등록 & 수정 화면 별로 헤더 다르게 설정
     function pageTitle() {
 
@@ -50,22 +87,26 @@ export default function DepartmentComponent() {
 
 
 
+    // 부서 등록 & 수정 핸들러
     function saveOrUpdateDepartment(e) {
 
         e.preventDefault();
 
-        const department = { departmentName, departmentDescription }
+        
+        // 필드 값 유효성 검사
+        if (emptyValidationForm()) {
 
-        console.log(department);
+            const department = { departmentName, departmentDescription }
 
-        createDepartment(department)
-            .then((res) => {
-                console.log(res.data);
-                navigate('/departments');
-            })
-            .catch(error => {
-                console.error(error);
-            })
+            createDepartment(department)
+                .then((res) => {
+                    console.log(res.data);
+                    navigate('/departments');
+                })
+                .catch(error => {
+                    console.error(error);
+                })
+        }
     }
 
     return (    
@@ -85,8 +126,9 @@ export default function DepartmentComponent() {
                                     placeholder="부서 이름 입력"
                                     value={departmentName}
                                     onChange={(e) => setDepartmentName(e.target.value)}
-                                    className="form-control"
+                                    className={`form-control mb-4 ${errors.departmentName ? 'is-invalid' : ''}`}
                                 />
+                                { errors.departmentName && <p className="invalid-feedback">{errors.departmentName}</p> }
                             </div>
                             <div className="form-group mb-2">
                                 <label className="form-label">부서 설명</label>
@@ -96,8 +138,9 @@ export default function DepartmentComponent() {
                                     placeholder="부서 설명 입력"
                                     value={departmentDescription}
                                     onChange={(e) => setDepartmentDescription(e.target.value)}
-                                    className="form-control"
+                                    className={`form-control mb-4 ${errors.departmentDescription ? 'is-invalid' : ''}`}
                                 />
+                                { errors.departmentDescription && <p className="invalid-feedback">{errors.departmentDescription}</p> }
                             </div>
                             <button 
                                 className="btn btn-success mt-4"  
