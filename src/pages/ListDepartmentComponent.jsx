@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { listDepartments } from "../services/DepartmentService";
+import { deleteDepartment, listDepartments } from "../services/DepartmentService";
 import { Link, useNavigate } from "react-router-dom";
 
 export default function ListDepartmentComponent() {
@@ -8,10 +8,14 @@ export default function ListDepartmentComponent() {
 
     const navigate = useNavigate();
 
+
+
+    // 전체 부서 목록 읽어오기 -> 초기 렌더링 시
     useEffect(() => {
         getAllDepartments();
     }, []);
 
+    
     
     // 전체 부서 조회 핸들러
     function getAllDepartments() {
@@ -23,6 +27,27 @@ export default function ListDepartmentComponent() {
             .catch(error =>{
                 console.error(error);
             })
+    }
+
+
+
+    // 직원 삭제 핸들러
+    function removeDepartment(id) {
+
+        if (window.confirm('삭제하시겠습니까?')) {
+
+            deleteDepartment(id)
+                .then((res) => {
+                    console.log(res.data);
+
+                    // 삭제 후 부서 목록 읽어오기
+                    getAllDepartments();
+                })
+                .catch(error => {
+                    console.error(error);
+                })
+
+        }
     }
 
     return (
@@ -39,8 +64,12 @@ export default function ListDepartmentComponent() {
                     </tr>
                 </thead>
                 <tbody>
-                    {
-                        departments.map(((dept) =>(
+                    {departments.length === 0 ? (
+                        <tr>
+                            <td colSpan="5">등록된 부서가 없습니다.</td>
+                        </tr>
+                    ) : (
+                        departments.slice().reverse().map((dept) => (
                             <tr key={dept.id}>
                                 <td>{dept.id}</td>
                                 <td>{dept.departmentName}</td>
@@ -54,17 +83,17 @@ export default function ListDepartmentComponent() {
                                     </button>
                                     <button
                                         className="btn btn-danger"
-                                        onClick={() => {}}
-                                        style={{marginLeft: '5px'}} 
+                                        style={{ marginLeft: '5px' }}
+                                        onClick={() => removeDepartment(dept.id)}
                                     >
                                         삭제
                                     </button>
                                 </td>
                             </tr>
-                        )))
-                    }
+                        ))
+                    )}
                 </tbody>
             </table>
         </div>
-    )
+    );
 }

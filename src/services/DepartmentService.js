@@ -29,3 +29,10 @@ export const createDepartment = (department) => {
 export const updateDepartment = (departmentId, department) => {
     return axios.put(REST_API_BASE_URL + '/' + departmentId, department);
 }
+
+
+
+// 부서 삭제
+export const deleteDepartment = (departmentId) => {
+    return axios.delete(REST_API_BASE_URL + '/' + departmentId);
+}
