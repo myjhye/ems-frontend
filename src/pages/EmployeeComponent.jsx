@@ -8,7 +8,7 @@ export default function EmployeeComponent() {
   const [department, setDepartment] = useState('');
   const [departments, setDepartments] = useState([]);
   const [email, setEmail] = useState('');
-  const [emailDomain, setEmailDomain] = useState('');
+  const [emailDomain, setEmailDomain] = useState('google.com');
   const [errors, setErrors] = useState({
     fullName: '',
     department: '',
