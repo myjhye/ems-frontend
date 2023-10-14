@@ -55,10 +55,10 @@ export default function ListEmployeeComponents() {
             <table className="table table-striped table-bordered">
                 <thead>
                     <tr>
-                        <th >Id</th>
+                        <th>사번</th>
                         <th>이름</th>
                         <th>부서</th>
-                        <th>Email Id</th>
+                        <th>이메일</th>
                         <th>기능</th>
                     </tr>
                 </thead>

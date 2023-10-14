@@ -53,13 +53,13 @@ export default function ListDepartmentComponent() {
     return (
         <div className="container">
             <h2 className="text-center mt-5 mb-3">부서 리스트</h2>
-            <Link to='/add-department' className="btn btn-primary mb-2">부서 등록</Link>
+            <Link to='/add-department' className="btn btn-primary mb-3">부서 등록</Link>
             <table className="table table-striped table-bordered">
                 <thead>
                     <tr>
-                        <th>id</th>
-                        <th>부서 이름</th>
-                        <th>부서 설명</th>
+                        <th>부서 코드</th>
+                        <th>이름</th>
+                        <th>설명</th>
                         <th>기능</th>
                     </tr>
                 </thead>
