@@ -83,16 +83,18 @@ export default function EmployeeComponent() {
             valid = false;
         }
 
-        if (department.trim()) {
+        if (department) {
             errorsCopy.department = '';
         } else {
             errorsCopy.department = '부서를 선택하세요';
+            valid = false;
         }
 
         if (email.trim()) {
             errorsCopy.email = '';
         } else {
             errorsCopy.email = '이메일을 입력하세요';
+            valid = false;
         }
 
         setErrors(errorsCopy);
