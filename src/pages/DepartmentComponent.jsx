@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { createDepartment, getDepartments } from "../services/DepartmentService";
+import { createDepartment, getDepartments, updateDepartment } from "../services/DepartmentService";
 import { useNavigate, useParams } from "react-router-dom";
 
 export default function DepartmentComponent() {
@@ -98,7 +98,21 @@ export default function DepartmentComponent() {
 
             const department = { departmentName, departmentDescription }
 
-            createDepartment(department)
+
+            // 직원 수정
+            if (id) {
+
+                updateDepartment(id, department)
+                    .then((res) => {
+                        console.log(res.data);
+                        navigate('/departments');
+                    })
+
+
+            // 직원 등록    
+            } else {
+
+                createDepartment(department)
                 .then((res) => {
                     console.log(res.data);
                     navigate('/departments');
@@ -106,6 +120,10 @@ export default function DepartmentComponent() {
                 .catch(error => {
                     console.error(error);
                 })
+
+            }
+
+            
         }
     }
 

@@ -22,3 +22,10 @@ export const getDepartments = (departmentId) => {
 export const createDepartment = (department) => {
     return axios.post(REST_API_BASE_URL, department);
 }
+
+
+
+// 부서 수정
+export const updateDepartment = (departmentId, department) => {
+    return axios.put(REST_API_BASE_URL + '/' + departmentId, department);
+}
