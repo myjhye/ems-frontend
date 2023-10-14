@@ -1,15 +1,17 @@
 import { useEffect, useState } from "react"
 import { createEmployee, getEmployees, updateEmployee } from "../services/EmployeeService";
 import { useNavigate, useParams } from "react-router-dom";
+import { listDepartments } from "../services/DepartmentService";
 
 export default function EmployeeComponent() {
 
-    const [firstName, setFirstName] = useState('');
-    const [lastName, setLastName] = useState('');
+    const [fullName, setfullName] = useState('');
+    const [department, setDepartment] = useState('');
+    const [departments, setDepartments] = useState([]);
     const [email, setEmail] = useState('');
     const [errors, setErrors] = useState({
-        firstName: '',
-        lastName: '',
+        fullName: '',
+        department: '',
         email: '',
     })
     const [errorEmail, setErrorEmail] = useState('');
@@ -30,8 +32,8 @@ export default function EmployeeComponent() {
                 .then((res) => {
 
                     // 서버에서 받아온 직원 정보를 각 입력 필드의 초기 값으로 설정
-                    setFirstName(res.data.firstName);
-                    setLastName(res.data.lastName);
+                    setfullName(res.data.fullName);
+                    setDepartment(res.data.department);
                     setEmail(res.data.email);
                 })
                 .catch(error => {
@@ -41,6 +43,24 @@ export default function EmployeeComponent() {
 
     // 컴포넌트 초기 마운트 & id 변경 시 실행
     }, [id]);
+
+
+
+
+    // 부서 데이터 읽어오기 -> 부서 필드 값
+    useEffect(() => {
+        
+        listDepartments()
+            .then((res) => {
+                // departmentName만 추출
+                const departmentNames = res.data.map((dep) => dep.departmentName); 
+                setDepartments(departmentNames);
+            })
+            .catch((error) => {
+                console.error(error);
+            });
+    }, []);
+    
 
 
 
@@ -56,17 +76,17 @@ export default function EmployeeComponent() {
             ...errors
         }
 
-        if (firstName.trim()) {
-            errorsCopy.firstName = '';
+        if (fullName.trim()) {
+            errorsCopy.fullName = '';
         } else {
-            errorsCopy.firstName = '이름을 입력하세요';
+            errorsCopy.fullName = '이름을 입력하세요';
             valid = false;
         }
 
-        if (lastName.trim()) {
-            errorsCopy.lastName = '';
+        if (department.trim()) {
+            errorsCopy.department = '';
         } else {
-            errorsCopy.lastName = '성을 입력하세요';
+            errorsCopy.department = '부서를 선택하세요';
         }
 
         if (email.trim()) {
@@ -100,7 +120,7 @@ export default function EmployeeComponent() {
         if (emptyValidateForm()) {
             if (emailValidateForm(email)) {
 
-                const employee = { firstName, lastName, email };
+                const employee = { fullName, department, email };
                 
 
                 // 직원 수정
@@ -159,30 +179,43 @@ export default function EmployeeComponent() {
                     }
                     <div className="card-body">
                         <form>
+
+                            {/* 이름 */}
                             <div className="form-group mb-2">
-                                <label className="form-label">First Name</label>
+                                <label className="form-label">이름</label>
                                 <input 
                                     type='text' 
                                     placeholder="이름 입력" 
-                                    name='firstName' 
-                                    value={firstName}
-                                    className={`form-control mb-4 ${errors.firstName ? 'is-invalid' : ''}`}
-                                    onChange={(e) => setFirstName(e.target.value)}
+                                    name='fullName' 
+                                    value={fullName}
+                                    className={`form-control mb-4 ${errors.fullName ? 'is-invalid' : ''}`}
+                                    onChange={(e) => setfullName(e.target.value)}
                                 />
-                                { errors.firstName && <p className="invalid-feedback">{errors.firstName}</p>}
+                                { errors.fullName && <p className="invalid-feedback">{errors.fullName}</p>}
                             </div>
+
+
+                            {/* 부서 */}
                             <div className="form-group mb-2">
-                                <label className="form-label">Last Name</label>
-                                <input 
-                                    type='text' 
-                                    placeholder="성 입력" 
-                                    name='lastName' 
-                                    value={lastName}
-                                    className={`form-control mb-4 ${errors.lastName ? 'is-invalid' : ''}`}
-                                    onChange={(e) => setLastName(e.target.value)}
-                                />
-                                { errors.lastName && <p className="invalid-feedback">{errors.lastName}</p>}
+                                <label className="form-label">부서</label>
+                                <select
+                                    name="department"
+                                    value={department}
+                                    className={`form-control mb-4 ${errors.department ? "is-invalid" : ""}`}
+                                    onChange={(e) => setDepartment(e.target.value)}
+                                >
+                                    <option value="">부서를 선택하세요</option>
+                                    {departments.map((dept) => (
+                                        <option key={dept} value={dept}>
+                                            {dept}
+                                        </option>
+                                    ))}
+                                </select>
+                                {errors.department && <p className="invalid-feedback">{errors.department}</p>}
                             </div>
+
+
+                            {/* 이메일 */}
                             <div className="form-group mb-2">
                                 <label className="form-label">Email</label>
                                 <input 
