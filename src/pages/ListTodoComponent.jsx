@@ -1,10 +1,12 @@
 import { useEffect, useState } from "react"
 import { getAllTodos } from "../services/TodoService";
+import { useNavigate } from "react-router-dom";
 
 export default function ListTodoComponent() {
 
     const [todos, setTodos] = useState([]);
 
+    const navigate = useNavigate();
 
 
     // 초기 렌더링 화면
@@ -27,9 +29,17 @@ export default function ListTodoComponent() {
             })
     }
 
+
+
     return (
         <div className="container">
             <h2 className="text-center">일정 리스트</h2>
+            <button 
+                className="btn btn-primary mb-2"
+                onClick={() => navigate('/add-todo')}
+            >
+                일정 등록
+            </button>
             <div>
                 <table className="table table-bordered table-striped">
                     <thead>

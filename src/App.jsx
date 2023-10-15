@@ -6,6 +6,7 @@ import ListEmployeeComponents from './pages/ListEmployeeComponent'
 import HeaderComponent from './components/HeaderComponent'
 import DepartmentComponent from './pages/DepartmentComponent'
 import ListTodoComponent from './pages/ListTodoComponent'
+import TodoComponent from './pages/TodoComponent'
 
 
 function App() {
@@ -44,6 +45,9 @@ function App() {
 
                   {/* 투두 목록 */}
                   <Route path='/todos' element={ <ListTodoComponent /> }></Route>
+                  
+                  {/* 투두 목록 */}
+                  <Route path='/add-todo' element={ <TodoComponent /> }></Route>
 
               </Routes>
       </BrowserRouter>
