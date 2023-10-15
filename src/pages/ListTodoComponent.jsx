@@ -1,31 +1,31 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
+import { getAllTodos } from "../services/TodoService";
 
 export default function ListTodoComponent() {
 
-   
+    const [todos, setTodos] = useState([]);
 
-    const data = [
-        {
-            "id": 1,
-            "title": "제목1",
-            "description": "내용1",
-            "completed": false
-        },
-        {
-            "id": 2,
-            "title": "제목2",
-            "description": "내용2",
-            "completed": true
-        },
-        {
-            "id": 3,
-            "title": "제목3",
-            "description": "내용3",
-            "completed": false
-        }
-    ]
 
-    const [todos, setTodos] = useState(data);
+
+    // 초기 렌더링 화면
+    useEffect(() => {
+
+        listTodos();
+    }, []);
+
+
+
+    // 투두 목록 조회
+    function listTodos() {
+        
+        getAllTodos()
+            .then((res) => {
+                setTodos(res.data);
+            })
+            .catch(error => {
+                console.error(error);
+            })
+    }
 
     return (
         <div className="container">
