@@ -15,6 +15,9 @@ export default function HeaderComponent() {
                             <li className="nav-item">
                                 <NavLink className='nav-link' to='/departments'>부서</NavLink>
                             </li>
+                            <li className="nav-item">
+                                <NavLink className='nav-link' to='/todos'>일정</NavLink>
+                            </li>
                         </ul>
                     </div>
                 </nav>

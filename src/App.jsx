@@ -5,6 +5,7 @@ import EmployeeComponent from './pages/EmployeeComponent'
 import ListEmployeeComponents from './pages/ListEmployeeComponent'
 import HeaderComponent from './components/HeaderComponent'
 import DepartmentComponent from './pages/DepartmentComponent'
+import ListTodoComponent from './pages/ListTodoComponent'
 
 
 function App() {
@@ -38,6 +39,11 @@ function App() {
 
                   {/* 부서 수정 */}
                   <Route path='/edit-department/:id' element={ <DepartmentComponent /> }></Route>
+
+
+
+                  {/* 투두 목록 */}
+                  <Route path='/todos' element={ <ListTodoComponent /> }></Route>
 
               </Routes>
       </BrowserRouter>

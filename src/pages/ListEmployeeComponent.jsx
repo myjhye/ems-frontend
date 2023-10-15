@@ -68,7 +68,7 @@ export default function ListEmployeeComponents() {
                             <td colSpan="5" >등록된 직원이 없습니다.</td>
                         </tr>
                     ) : (
-                        employees.slice().reverse().map((emp) => (
+                        employees.map((emp) => (
                             <tr key={emp.id}>
                                 <td>{emp.id}</td>
                                 <td>{emp.fullName}</td>
