@@ -1,11 +1,14 @@
 import { useState } from "react"
-import { useActionData } from "react-router-dom";
+import { addTodo } from "../services/TodoService";
+import { useNavigate } from "react-router-dom";
 
 export default function TodoComponent() {
 
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
     const [completed, setCompleted] = useState(false);
+
+    const navigate = useNavigate();
 
 
     function saveTodo(e) {
@@ -14,7 +17,14 @@ export default function TodoComponent() {
 
         const todo = { title, description, completed } 
 
-        console.log(todo);
+        addTodo(todo) 
+            .then((res) => {
+                console.log(res.data);
+                navigate('/todos');
+            })
+            .catch(error => {
+                console.error(error);
+            })
     }
 
     return (

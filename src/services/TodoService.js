@@ -11,3 +11,7 @@ export function getAllTodos() {
 
 
 // 투두 등록
+export function addTodo(todo) {
+
+    return axios.post(BASE_REST_API_URL, todo);
+}
