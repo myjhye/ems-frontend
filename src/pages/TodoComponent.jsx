@@ -13,6 +13,7 @@ export default function TodoComponent() {
     const { id } = useParams();
 
 
+
     // 입력 필드에 초기 값 설정 -> 수정 모드
     useEffect(() => {
 
@@ -29,6 +30,8 @@ export default function TodoComponent() {
         }
         
     }, [id]);
+
+
 
 
     //  저장 핸들러
@@ -64,17 +67,29 @@ export default function TodoComponent() {
             .catch(error => {
                 console.error(error);
             })
-
         }
-
-        
     }
+
+
+
+    // 등록 & 수정 화면 별로 헤더 설정
+    function pageTitle() {
+
+        if (id) {
+            return <h2 className="text-center mt-3">일정 수정</h2>;
+        } else {
+            return <h2 className="text-center mt-3">일정 등록</h2>;
+        }
+    }
+
+
+
 
     return (
         <div className="container">
             <div className="row">
                 <div className="card mt-4 col-md-6 offset-md-3 offset-md-3">
-                    <h2 className="text-center mt-3">일정 등록</h2>
+                    { pageTitle() }
                     <div className="card-body">
                         <form>
                             <div className="form-group mb-2">
