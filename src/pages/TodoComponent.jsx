@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { addTodo, getTodo, updateTodo } from "../services/TodoService";
 import { useNavigate, useParams } from "react-router-dom";
 import { listEmployees } from "../services/EmployeeService";
+import TimePicker from "../components/TimePicker";
 
 export default function TodoComponent() {
   const [title, setTitle] = useState("");
@@ -10,9 +11,14 @@ export default function TodoComponent() {
   const [employeeNames, setEmployeeNames] = useState([]);
   const [selectedEmployees, setSelectedEmployees] = useState([]);
   const [selectedEmployeeCards, setSelectedEmployeeCards] = useState([]); // 선택된 직원 카드 목록 추가
+  const [startTime, setStartTime] = useState(""); // 시작 시간
+const [endTime, setEndTime] = useState(""); // 종료 시간
 
   const navigate = useNavigate();
   const { id } = useParams();
+
+
+
 
   // 입력 필드에 초기 값 설정 -> 수정 모드
   useEffect(() => {
@@ -28,6 +34,10 @@ export default function TodoComponent() {
         });
     }
   }, [id]);
+
+
+
+
 
   // 저장 핸들러
   function saveTodo(e) {
@@ -60,6 +70,11 @@ export default function TodoComponent() {
     }
   }
 
+
+
+
+
+
   // 등록 & 수정 화면 별로 헤더 설정
   function pageTitle() {
     if (id) {
@@ -68,6 +83,9 @@ export default function TodoComponent() {
       return <h2 className="text-center mt-3">일정 등록</h2>;
     }
   }
+
+
+
 
   // 직원 데이터 읽어오기 -> 필드 값
   useEffect(() => {
@@ -81,38 +99,63 @@ export default function TodoComponent() {
       });
   }, []);
 
+
+
+
+
   // 선택된 직원 추가 또는 제거
   function handleEmployeeSelection(e) {
+    
     const selectedEmployee = e.target.value;
+    
     if (!selectedEmployees.includes(selectedEmployee)) {
+    
       setSelectedEmployees([...selectedEmployees, selectedEmployee]);
       // 선택된 직원 카드 추가
       setSelectedEmployeeCards([...selectedEmployeeCards, selectedEmployee]);
+    
     } else {
+    
       const updatedSelectedEmployees = selectedEmployees.filter(
         (employee) => employee !== selectedEmployee
       );
+    
       setSelectedEmployees(updatedSelectedEmployees);
+    
       // 선택된 직원 카드 삭제
       const updatedSelectedEmployeeCards = selectedEmployeeCards.filter(
         (employee) => employee !== selectedEmployee
       );
+    
       setSelectedEmployeeCards(updatedSelectedEmployeeCards);
     }
   }
 
+
+
+
+
+
   // 선택된 직원 카드 삭제
   function removeSelectedEmployeeCard(employeeName) {
+    
     const updatedSelectedEmployeeCards = selectedEmployeeCards.filter(
       (employee) => employee !== employeeName
     );
+    
     setSelectedEmployeeCards(updatedSelectedEmployeeCards);
+    
     // 선택된 직원 목록에서도 삭제
     const updatedSelectedEmployees = selectedEmployees.filter(
       (employee) => employee !== employeeName
     );
+    
     setSelectedEmployees(updatedSelectedEmployees);
   }
+
+
+
+
 
   return (
     <div className="container">
@@ -144,7 +187,7 @@ export default function TodoComponent() {
                 />
               </div>
               <div className="form-group mb-2">
-                <label className="form-label">직원 선택</label>
+                <label className="form-label">참여자</label>
                 <select
                   name="employeNames"
                   value={selectedEmployees}
@@ -174,8 +217,16 @@ export default function TodoComponent() {
                     </div>
                 ))}
               </div>
+              <div className="form-group mb-2">
+                <label className="form-label mt-4">시작 시간</label>
+                <TimePicker selectedTime={startTime} onChange={setStartTime} />
+              </div>
+              <div className="form-group mb-2">
+                <label className="form-label">종료 시간</label>
+                <TimePicker selectedTime={endTime} onChange={setEndTime} />
+              </div>
               <button
-                className="btn btn-success mb-4"
+                className="btn btn-success mt-4 mb-4"
                 style={{ width: "100%" }}
                 onClick={(e) => saveTodo(e)}
               >
