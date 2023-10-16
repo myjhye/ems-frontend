@@ -44,3 +44,10 @@ export function deleteTodo(todoId) {
 export function completeTodo(todoId) {
     return axios.patch(BASE_REST_API_URL + '/' + todoId + '/complete');
 } 
+
+
+
+// 투두 미완료
+export function incompleteTodo(todoId) {
+    return axios.patch(BASE_REST_API_URL + '/' + todoId + '/incomplete');
+} 

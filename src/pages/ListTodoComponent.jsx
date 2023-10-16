@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { completeTodo, deleteTodo, getAllTodos } from "../services/TodoService";
+import { completeTodo, deleteTodo, getAllTodos, incompleteTodo } from "../services/TodoService";
 import { useNavigate } from "react-router-dom";
 
 export default function ListTodoComponent() {
@@ -66,6 +66,21 @@ export default function ListTodoComponent() {
 
 
 
+    // 투두 미완료 핸들러
+    function markIncompleteTodo(id) {
+
+        incompleteTodo(id)
+            .then((res) => {
+                listTodos();
+            })
+            .catch(error => {
+                console.error(error);
+            })
+    }
+
+
+
+
     return (
         <div className="container">
             <h2 className="text-center mt-5 mb-3">일정 리스트</h2>
@@ -82,7 +97,7 @@ export default function ListTodoComponent() {
                             <th>일정 제목</th>
                             <th>일정 상세</th>
                             <th>완료 여부</th>
-                            <th style={{ width: "200px" }}>기능</th>
+                            <th>기능</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -91,7 +106,7 @@ export default function ListTodoComponent() {
                                 <tr key={todo.id}>
                                     <td>{todo.title}</td>
                                     <td>{todo.description}</td>
-                                    <td>{todo.completed ? 'y' : 'n'}</td>
+                                    <td>{todo.completed ? '✅' : '❌'}</td>
                                     <td>
                                         <button className="btn btn-info" onClick={() => navigate(`/update-todo/${todo.id}`)}>수정</button>
                                         <button 
@@ -102,11 +117,17 @@ export default function ListTodoComponent() {
                                             삭제
                                         </button>
                                         <button
-                                            className="btn btn-success"
-                                            style={{marginLeft: '5px'}} 
-                                            onClick={() => markCompleteTodo(todo.id)} 
+                                            className={`btn ${todo.completed ? 'btn-danger' : 'btn-success'}`}
+                                            style={{ marginLeft: '5px' }}
+                                            onClick={() => {
+                                                if (todo.completed) {
+                                                    markIncompleteTodo(todo.id);
+                                                } else {
+                                                    markCompleteTodo(todo.id);
+                                                }
+                                            }}
                                         >
-                                            완료
+                                            {todo.completed ? '미완료' : '완료'}
                                         </button>
                                     </td>
                                 </tr>
