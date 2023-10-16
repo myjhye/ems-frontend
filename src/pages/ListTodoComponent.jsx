@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { deleteTodo, getAllTodos } from "../services/TodoService";
+import { completeTodo, deleteTodo, getAllTodos } from "../services/TodoService";
 import { useNavigate } from "react-router-dom";
 
 export default function ListTodoComponent() {
@@ -51,6 +51,21 @@ export default function ListTodoComponent() {
 
 
 
+    // 투두 완료 핸들러
+    function markCompleteTodo(id) {
+
+        completeTodo(id)
+            .then((res) => {
+                listTodos();
+            })
+            .catch(error => {
+                console.error(error);
+            })
+    }
+
+
+
+
     return (
         <div className="container">
             <h2 className="text-center mt-5 mb-3">일정 리스트</h2>
@@ -85,6 +100,13 @@ export default function ListTodoComponent() {
                                             onClick={() => removeTodo(todo.id)} 
                                         >
                                             삭제
+                                        </button>
+                                        <button
+                                            className="btn btn-success"
+                                            style={{marginLeft: '5px'}} 
+                                            onClick={() => markCompleteTodo(todo.id)} 
+                                        >
+                                            완료
                                         </button>
                                     </td>
                                 </tr>

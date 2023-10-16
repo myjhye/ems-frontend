@@ -37,3 +37,10 @@ export function deleteTodo(todoId) {
 
     return axios.delete(BASE_REST_API_URL + '/' + todoId);
 }
+
+
+
+// 투두 완료
+export function completeTodo(todoId) {
+    return axios.patch(BASE_REST_API_URL + '/' + todoId + '/complete');
+} 
