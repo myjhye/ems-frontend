@@ -30,3 +30,10 @@ export function updateTodo(TodoId, todo) {
 
     return axios.put(BASE_REST_API_URL + '/' + TodoId, todo);
 }
+
+
+// 투두 삭제
+export function deleteTodo(todoId) {
+
+    return axios.delete(BASE_REST_API_URL + '/' + todoId);
+}

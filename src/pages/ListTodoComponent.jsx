@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { getAllTodos } from "../services/TodoService";
+import { deleteTodo, getAllTodos } from "../services/TodoService";
 import { useNavigate } from "react-router-dom";
 
 export default function ListTodoComponent() {
@@ -9,7 +9,7 @@ export default function ListTodoComponent() {
     const navigate = useNavigate();
 
 
-    // 초기 렌더링 화면
+    // 초기 렌더링 화면 -> 전체 투두 목록 조회
     useEffect(() => {
 
         listTodos();
@@ -17,7 +17,7 @@ export default function ListTodoComponent() {
 
 
 
-    // 투두 목록 조회
+    // 투두 목록 조회 핸들러
     function listTodos() {
         
         getAllTodos()
@@ -32,11 +32,30 @@ export default function ListTodoComponent() {
 
 
 
+    // 투두 삭제 핸들러
+    function removeTodo(id) {
+
+        if (window.confirm('삭제하시겠습니까?')) {
+
+            deleteTodo(id)
+                .then((res) => {
+                    console.log(res.data);
+                    listTodos();
+                })
+                .catch(error => {
+                    console.error(error);
+                })
+        }
+    }
+
+
+
+
     return (
         <div className="container">
-            <h2 className="text-center">일정 리스트</h2>
+            <h2 className="text-center mt-5 mb-3">일정 리스트</h2>
             <button 
-                className="btn btn-primary mb-2"
+                className="btn btn-primary mb-3"
                 onClick={() => navigate('/add-todo')}
             >
                 일정 등록
@@ -48,7 +67,7 @@ export default function ListTodoComponent() {
                             <th>일정 제목</th>
                             <th>일정 상세</th>
                             <th>완료 여부</th>
-                            <th>기능</th>
+                            <th style={{ width: "200px" }}>기능</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -60,6 +79,13 @@ export default function ListTodoComponent() {
                                     <td>{todo.completed ? 'y' : 'n'}</td>
                                     <td>
                                         <button className="btn btn-info" onClick={() => navigate(`/update-todo/${todo.id}`)}>수정</button>
+                                        <button 
+                                            className="btn btn-danger"
+                                            style={{marginLeft: '5px'}}  
+                                            onClick={() => removeTodo(todo.id)} 
+                                        >
+                                            삭제
+                                        </button>
                                     </td>
                                 </tr>
                             ))
