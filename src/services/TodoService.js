@@ -10,8 +10,23 @@ export function getAllTodos() {
 }
 
 
+
+// 투두 조회 -> 단일
+export function getTodo(todoId) {
+
+    return axios.get(BASE_REST_API_URL + '/' + todoId);
+}
+
+
 // 투두 등록
 export function addTodo(todo) {
 
     return axios.post(BASE_REST_API_URL, todo);
+}
+
+
+// 투두 수정
+export function updateTodo(TodoId, todo) {
+
+    return axios.put(BASE_REST_API_URL + '/' + TodoId, todo);
 }

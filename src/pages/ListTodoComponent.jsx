@@ -31,6 +31,7 @@ export default function ListTodoComponent() {
 
 
 
+
     return (
         <div className="container">
             <h2 className="text-center">일정 리스트</h2>
@@ -47,6 +48,7 @@ export default function ListTodoComponent() {
                             <th>일정 제목</th>
                             <th>일정 상세</th>
                             <th>완료 여부</th>
+                            <th>기능</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -56,6 +58,9 @@ export default function ListTodoComponent() {
                                     <td>{todo.title}</td>
                                     <td>{todo.description}</td>
                                     <td>{todo.completed ? 'y' : 'n'}</td>
+                                    <td>
+                                        <button className="btn btn-info" onClick={() => navigate(`/update-todo/${todo.id}`)}>수정</button>
+                                    </td>
                                 </tr>
                             ))
                         }

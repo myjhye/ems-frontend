@@ -46,8 +46,11 @@ function App() {
                   {/* 투두 목록 */}
                   <Route path='/todos' element={ <ListTodoComponent /> }></Route>
                   
-                  {/* 투두 목록 */}
+                  {/* 투두 등록 */}
                   <Route path='/add-todo' element={ <TodoComponent /> }></Route>
+
+                  {/* 투두 수정 */}
+                  <Route path='/update-todo/:id' element={ <TodoComponent /> }></Route>
 
               </Routes>
       </BrowserRouter>

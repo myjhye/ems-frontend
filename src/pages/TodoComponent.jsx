@@ -1,6 +1,6 @@
-import { useState } from "react"
-import { addTodo } from "../services/TodoService";
-import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react"
+import { addTodo, getTodo, updateTodo } from "../services/TodoService";
+import { useNavigate, useParams } from "react-router-dom";
 
 export default function TodoComponent() {
 
@@ -10,14 +10,53 @@ export default function TodoComponent() {
 
     const navigate = useNavigate();
 
+    const { id } = useParams();
 
+
+    // 입력 필드에 초기 값 설정 -> 수정 모드
+    useEffect(() => {
+
+        if (id) {
+            // 해당 투두 정보를 서버에서 가져옴
+            getTodo(id)
+                .then((res) => {
+                    setTitle(res.data.title);
+                    setDescription(res.data.description);
+                })
+                .catch(error => {
+                    console.error(error);
+                })
+        }
+        
+    }, [id]);
+
+
+    //  저장 핸들러
     function saveTodo(e) {
 
         e.preventDefault();
 
-        const todo = { title, description, completed } 
+        const todo = { title, description, completed }
+        
 
-        addTodo(todo) 
+        // 수정
+        if (id) {
+
+            updateTodo(id, todo)
+                .then((res) => {
+                    console.log(res.data);
+                    navigate('/todos');
+
+                })
+                .catch(error => {
+                    console.error(error);
+                })
+
+
+        // 저장
+        } else {
+
+            addTodo(todo) 
             .then((res) => {
                 console.log(res.data);
                 navigate('/todos');
@@ -25,6 +64,10 @@ export default function TodoComponent() {
             .catch(error => {
                 console.error(error);
             })
+
+        }
+
+        
     }
 
     return (
