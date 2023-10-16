@@ -97,6 +97,7 @@ export default function ListTodoComponent() {
                             <th>일정 제목</th>
                             <th>일정 상세</th>
                             <th>참여자</th>
+                            <th>시간</th>
                             <th>완료 여부</th>
                             <th>기능</th>
                         </tr>
@@ -108,6 +109,7 @@ export default function ListTodoComponent() {
                                     <td>{todo.title}</td>
                                     <td>{todo.description}</td>
                                     <td>{todo.participants}</td>
+                                    <td>{todo.time}</td>
                                     <td>{todo.completed ? '✅' : '❌'}</td>
                                     <td>
                                         <button className="btn btn-info" onClick={() => navigate(`/update-todo/${todo.id}`)}>수정</button>

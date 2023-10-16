@@ -12,7 +12,7 @@ export default function TodoComponent() {
   const [selectedEmployees, setSelectedEmployees] = useState([]);
   const [selectedEmployeeCards, setSelectedEmployeeCards] = useState([]); // 선택된 직원 카드 목록 추가
   const [startTime, setStartTime] = useState(""); // 시작 시간
-const [endTime, setEndTime] = useState(""); // 종료 시간
+  const [endTime, setEndTime] = useState(""); // 종료 시간
 
   const navigate = useNavigate();
   const { id } = useParams();
@@ -43,9 +43,21 @@ const [endTime, setEndTime] = useState(""); // 종료 시간
   function saveTodo(e) {
     e.preventDefault();
 
+    if (startTime >= endTime) {
+        alert("시작 시간은 종료 시간보다 빨라야 합니다.");
+        return; // 저장 중지
+      }
+    
+
     // 선택된 직원들을 쉼표로 구분하여 하나의 문자열로 만듭니다.
     const participantsString = selectedEmployees.join(", ");
-    const todo = { title, description, completed, participants: participantsString };
+    const todo = { 
+        title, 
+        description, 
+        completed, 
+        participants: participantsString,
+        time: startTime  + ' ~ ' + endTime, 
+    };
 
     // 수정
     if (id) {
