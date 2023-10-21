@@ -7,7 +7,7 @@ import HeaderComponent from './components/HeaderComponent'
 import DepartmentComponent from './pages/DepartmentComponent'
 import ListTodoComponent from './pages/ListTodoComponent'
 import TodoComponent from './pages/TodoComponent'
-import RegisterComponent from './components/RegisterComponent'
+import RegisterComponent from './pages/RegisterComponent'
 
 
 function App() {
