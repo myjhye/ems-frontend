@@ -7,6 +7,7 @@ import HeaderComponent from './components/HeaderComponent'
 import DepartmentComponent from './pages/DepartmentComponent'
 import ListTodoComponent from './pages/ListTodoComponent'
 import TodoComponent from './pages/TodoComponent'
+import RegisterComponent from './components/RegisterComponent'
 
 
 function App() {
@@ -17,7 +18,8 @@ function App() {
           <HeaderComponent />
               <Routes>
                   
-                  
+
+                  {/* -------------- employee -------------- */}
                   {/* 직원 목록 */}
                   <Route path='/' element={ <ListEmployeeComponents /> }></Route>
                   <Route path='/employees' element={ <ListEmployeeComponents /> }></Route>
@@ -31,7 +33,7 @@ function App() {
 
 
 
-                  
+                  {/* -------------- department -------------- */}
                   {/* 부서 목록 */}
                   <Route path='/departments' element={ <ListDepartmentComponent /> }></Route>
                   
@@ -43,6 +45,7 @@ function App() {
 
 
 
+                  {/* -------------- todo -------------- */}
                   {/* 투두 목록 */}
                   <Route path='/todos' element={ <ListTodoComponent /> }></Route>
                   
@@ -51,6 +54,12 @@ function App() {
 
                   {/* 투두 수정 */}
                   <Route path='/update-todo/:id' element={ <TodoComponent /> }></Route>
+
+
+
+                  {/* -------------- user -------------- */}
+                    {/* 회원가입 */}
+                  <Route path='/register' element={ <RegisterComponent /> }></Route>
 
               </Routes>
       </BrowserRouter>

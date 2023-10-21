@@ -1,7 +1,7 @@
 import { NavLink } from "react-router-dom";
 
 export default function HeaderComponent() {
-    
+
     return (
         <div>
             <header>
@@ -17,6 +17,13 @@ export default function HeaderComponent() {
                             </li>
                             <li className="nav-item">
                                 <NavLink className='nav-link' to='/todos'>일정</NavLink>
+                            </li>
+                        </ul>
+                    </div>
+                    <div style={{marginLeft: 'auto'}}>
+                        <ul className="navbar-nav">
+                            <li className="nav-item">
+                                <NavLink className='nav-link' to='/register'>회원가입</NavLink>
                             </li>
                         </ul>
                     </div>
