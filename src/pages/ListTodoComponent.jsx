@@ -103,7 +103,11 @@ export default function ListTodoComponent() {
                         </tr>
                     </thead>
                     <tbody>
-                        {
+                        {todos.length === 0 ? (
+                            <tr>
+                                <td colSpan="6" >등록된 일정이 없습니다.</td>
+                            </tr>
+                        ) : (
                             todos.map((todo) => (
                                 <tr key={todo.id}>
                                     <td>{todo.title}</td>
@@ -136,7 +140,7 @@ export default function ListTodoComponent() {
                                     </td>
                                 </tr>
                             ))
-                        }
+                        )}
                     </tbody>
                 </table>
             </div>
