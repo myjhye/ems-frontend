@@ -8,6 +8,7 @@ import DepartmentComponent from './pages/DepartmentComponent'
 import ListTodoComponent from './pages/ListTodoComponent'
 import TodoComponent from './pages/TodoComponent'
 import RegisterComponent from './pages/RegisterComponent'
+import LoginComponent from './pages/LoginComponent'
 
 
 function App() {
@@ -58,8 +59,12 @@ function App() {
 
 
                   {/* -------------- user -------------- */}
-                    {/* 회원가입 */}
+                  {/* 회원가입 */}
                   <Route path='/register' element={ <RegisterComponent /> }></Route>
+                  
+                  {/* 로그인 */}
+                  <Route path='/login' element={ <LoginComponent /> }></Route>
+          
 
               </Routes>
       </BrowserRouter>

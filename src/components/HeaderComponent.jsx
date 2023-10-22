@@ -27,6 +27,13 @@ export default function HeaderComponent() {
                             </li>
                         </ul>
                     </div>
+                    <div style={{marginLeft: 'auto'}}>
+                        <ul className="navbar-nav">
+                            <li className="nav-item">
+                                <NavLink className='nav-link' to='/login'>로그인</NavLink>
+                            </li>
+                        </ul>
+                    </div>
                 </nav>
             </header>
         </div>
