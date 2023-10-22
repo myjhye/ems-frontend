@@ -19,10 +19,10 @@ function App() {
           <HeaderComponent />
               <Routes>
                   
+                  <Route path='/' element={ <LoginComponent /> }></Route>
 
                   {/* -------------- employee -------------- */}
                   {/* 직원 목록 */}
-                  <Route path='/' element={ <ListEmployeeComponents /> }></Route>
                   <Route path='/employees' element={ <ListEmployeeComponents /> }></Route>
                   
                   {/* 직원 등록 */}

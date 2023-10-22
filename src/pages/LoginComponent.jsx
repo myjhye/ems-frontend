@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { loginAPICall, storeToken } from "../services/AuthService";
+import { loginAPICall, saveLoggedInUser, storeToken } from "../services/AuthService";
 import { useNavigate } from "react-router-dom";
 
 export default function LoginComponent() {
@@ -12,7 +12,7 @@ export default function LoginComponent() {
 
 
     // 로그인 핸들러
-    function handleLoginForm(e) {
+    async function handleLoginForm(e) {
 
         e.preventDefault();
 
@@ -23,7 +23,7 @@ export default function LoginComponent() {
 
 
         // 핸들러
-        loginAPICall(username, password)
+        await loginAPICall(username, password)
             
         
             .then((res) => {
@@ -32,8 +32,10 @@ export default function LoginComponent() {
                 const token = 'Basic ' + window.btoa(username + ":" + password);
                 storeToken(token);
 
-
+                saveLoggedInUser(username);
                 navigate('/todos');
+
+                window.location.reload(false);
             })
             
             
