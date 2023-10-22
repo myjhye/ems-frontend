@@ -1,11 +1,17 @@
 import { useState } from "react";
+import { loginAPICall } from "../services/AuthService";
+import { useNavigate } from "react-router-dom";
 
 export default function LoginComponent() {
 
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
 
+    const navigate = useNavigate();
 
+
+
+    // 로그인 핸들러
     function handleLoginForm(e) {
 
         e.preventDefault();
@@ -13,6 +19,22 @@ export default function LoginComponent() {
         const loginObj = { username, password }
 
         console.log(loginObj);
+
+
+
+        // 핸들러
+        loginAPICall(username, password)
+            
+        
+            .then((res) => {
+                console.log(res.data);
+                navigate('/');
+            })
+            
+            
+            .catch(error => {
+                console.error(error);
+            })
     }
 
 
