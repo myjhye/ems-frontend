@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { loginAPICall } from "../services/AuthService";
+import { loginAPICall, storeToken } from "../services/AuthService";
 import { useNavigate } from "react-router-dom";
 
 export default function LoginComponent() {
@@ -28,7 +28,12 @@ export default function LoginComponent() {
         
             .then((res) => {
                 console.log(res.data);
-                navigate('/');
+
+                const token = 'Basic ' + window.btoa(username + ":" + password);
+                storeToken(token);
+
+
+                navigate('/todos');
             })
             
             
