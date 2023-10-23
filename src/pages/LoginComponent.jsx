@@ -32,12 +32,12 @@ export default function LoginComponent() {
                 //const token = 'Basic ' + window.btoa(username + ":" + password);
                 
                 const token = 'Bearer ' + res.data.accessToken;
+                const role = res.data.role;
                 
                 storeToken(token);
-
-                saveLoggedInUser(username);
+                saveLoggedInUser(username, role);
+                
                 navigate('/todos');
-
                 window.location.reload(false);
             })
             

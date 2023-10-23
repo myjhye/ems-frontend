@@ -1,12 +1,15 @@
 import { useEffect, useState } from "react"
 import { completeTodo, deleteTodo, getAllTodos, incompleteTodo } from "../services/TodoService";
 import { useNavigate } from "react-router-dom";
+import { isAdminUser } from "../services/AuthService";
 
 export default function ListTodoComponent() {
 
     const [todos, setTodos] = useState([]);
 
     const navigate = useNavigate();
+
+    const isAdmin = isAdminUser();
 
 
     // 초기 렌더링 화면 -> 전체 투두 목록 조회
@@ -84,12 +87,16 @@ export default function ListTodoComponent() {
     return (
         <div className="container">
             <h2 className="text-center mt-5 mb-3">일정 리스트</h2>
-            <button 
-                className="btn btn-primary mb-3"
-                onClick={() => navigate('/add-todo')}
-            >
-                일정 등록
-            </button>
+            {
+                isAdmin && (
+                    <button 
+                        className="btn btn-primary mb-3"
+                        onClick={() => navigate('/add-todo')}
+                    >
+                        일정 등록
+                    </button>
+                )
+            }
             <div>
                 <table className="table table-bordered table-striped">
                     <thead>
@@ -116,14 +123,24 @@ export default function ListTodoComponent() {
                                     <td>{todo.time}</td>
                                     <td>{todo.completed ? '✅' : '❌'}</td>
                                     <td>
-                                        <button className="btn btn-info" onClick={() => navigate(`/update-todo/${todo.id}`)}>수정</button>
-                                        <button 
-                                            className="btn btn-danger"
-                                            style={{marginLeft: '5px'}}  
-                                            onClick={() => removeTodo(todo.id)} 
-                                        >
-                                            삭제
-                                        </button>
+                                        {
+                                            isAdmin && (
+                                                <button className="btn btn-info" onClick={() => navigate(`/update-todo/${todo.id}`)}>수정</button>
+                                            )
+                                        }
+                                        
+                                        {
+                                            isAdmin && (
+                                                <button 
+                                                    className="btn btn-danger"
+                                                    style={{marginLeft: '5px'}}  
+                                                    onClick={() => removeTodo(todo.id)} 
+                                                >
+                                                    삭제
+                                                </button>
+                                            )
+                                        }
+
                                         <button
                                             className={`btn ${todo.completed ? 'btn-danger' : 'btn-success'}`}
                                             style={{ marginLeft: '5px' }}
