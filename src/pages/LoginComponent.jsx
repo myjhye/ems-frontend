@@ -29,7 +29,10 @@ export default function LoginComponent() {
             .then((res) => {
                 console.log(res.data);
 
-                const token = 'Basic ' + window.btoa(username + ":" + password);
+                //const token = 'Basic ' + window.btoa(username + ":" + password);
+                
+                const token = 'Bearer ' + res.data.accessToken;
+                
                 storeToken(token);
 
                 saveLoggedInUser(username);
