@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { registerAPICall } from "../services/AuthService";
+import { useNavigate } from "react-router-dom";
 
 export default function RegisterComponent() {
   
@@ -11,6 +12,8 @@ export default function RegisterComponent() {
     const [confirmPasswordError, setConfirmPasswordError] = useState("");
     const [passwordError, setPasswordError] = useState("");
     const [errorMessage, setErrorMessage] = useState("");
+
+    const navigate = useNavigate();
 
     
     
@@ -103,9 +106,11 @@ export default function RegisterComponent() {
         // 성공
         .then((res) => {
           console.log(res.data);
+          
+          navigate('/login')
+          alert('회원가입이 완료되었습니다. 로그인 페이지로 이동합니다!')
+          
         })
-        
-        
         
         // 에러
         .catch((error) => {
