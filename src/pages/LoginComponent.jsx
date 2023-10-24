@@ -6,6 +6,7 @@ export default function LoginComponent() {
 
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
+    const [errorMessage, setErrorMessage] = useState("");
 
     const navigate = useNavigate();
 
@@ -26,6 +27,7 @@ export default function LoginComponent() {
         await loginAPICall(username, password)
             
         
+            // 성공
             .then((res) => {
                 console.log(res.data);
 
@@ -42,8 +44,12 @@ export default function LoginComponent() {
             })
             
             
+            // 실패
             .catch(error => {
-                console.error(error);
+
+              if (error.response && error.response.status === 401) {
+                setErrorMessage("계정이나 비밀번호를 확인하세요");
+              }
             })
     }
 
@@ -96,6 +102,12 @@ export default function LoginComponent() {
                   </form>
                 </div>
               </div>
+              {/* 로그인 에러 문구 */}
+              {errorMessage && (
+                <div className="alert alert-danger">
+                  {errorMessage}
+                </div>
+              )}
             </div>
           </div>
         </div>
