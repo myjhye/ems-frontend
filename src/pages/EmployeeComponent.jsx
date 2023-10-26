@@ -71,28 +71,40 @@ export default function EmployeeComponent() {
       });
   }, []);
 
+
+
+
+
   // 값 입력 유효성 검사
   function emptyValidateForm() {
+
     let valid = true;
     const errorsCopy = { ...errors };
 
+    
     if (fullName.trim()) {
+
       errorsCopy.fullName = '';
     } else {
+      
       errorsCopy.fullName = '이름을 입력하세요';
       valid = false;
     }
 
     if (department) {
+
       errorsCopy.department = '';
     } else {
+
       errorsCopy.department = '부서를 선택하세요';
       valid = false;
     }
 
     if (email.trim()) {
+
       errorsCopy.email = '';
     } else {
+
       errorsCopy.email = '이메일을 입력하세요';
       valid = false;
     }
@@ -100,6 +112,9 @@ export default function EmployeeComponent() {
     setErrors(errorsCopy);
     return valid;
   }
+
+
+
 
 
   // 중복 코드를 추출한 함수
@@ -129,25 +144,55 @@ export default function EmployeeComponent() {
   function saveOrUpdateEmployee(e) {
     e.preventDefault();
 
+    let emailToSave = email;
+
+    // 입력 필드 값 비어 있는 지 확인 -> 이름, 부서, 이메일
     if (emptyValidateForm()) {
-      if (emailDomain === "직접 입력") {
-        // "직접 입력" 옵션 선택 시에만 이메일 형식 검사 실행
-        if (emailValidateForm(email)) {
-          let emailToSave = email;
-          const employeeData = { fullName, department, email: emailToSave };
-          saveEmployee(employeeData);
-        } else {
+
+
+      // 직접 입력 아닌 경우 -> google.com, naver.com...(emailDomain) 첨부
+      if (emailDomain !== "직접 입력") {
+        
+        // '@' 입력되면 에러 표시
+        if (emailToSave.includes('@')) {
           setErrorEmail('올바른 이메일 형식을 입력하세요');
+          return;
         }
+
+        // '@' 추가되어 저장 -> 입력한 이메일 + @ + 선택한 도메인 
+        emailToSave += `@${emailDomain}`;
+      
+      
+      
+      // 직접 입력인 경우 -> aaa@aaa.com
       } else {
-        // "직접 입력"이 아닌 경우, 이메일 형식 검사를 수행하지 않고 에러 메시지 초기화
+
+        // 이메일 형식이 맞지 않으면 에러 표시 -> aaa@aaa.com 형태인지 확인
+        if (!emailValidateForm(emailToSave)) {
+
+          setErrorEmail('올바른 이메일 형식을 입력하세요');
+          return;
+        }
+
+        // 이메일 형식이 맞으면 에러 없이 처리
         setErrorEmail('');
-        let emailToSave = `${email}@${emailDomain}`;
-        const employeeData = { fullName, department, email: emailToSave };
-        saveEmployee(employeeData);
       }
+
+    
+      
+    // 입력 필드 값 비어 있으면 에러 표시 -> 이름, 부서, 이메일
+    } else {
+
+      return;
     }
+
+
+
+    // 입력 값들 가지고 등록 처리
+    const employeeData = { fullName, department, email: emailToSave };
+    saveEmployee(employeeData);
   }
+
 
 
   // 이메일 형식 유효성 검사
