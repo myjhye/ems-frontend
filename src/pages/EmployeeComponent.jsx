@@ -75,7 +75,7 @@ export default function EmployeeComponent() {
 
 
 
-  // 값 입력 유효성 검사
+  // 값 입력 유효성 검사 -> 필드 값 비어 있는지 확인
   function emptyValidateForm() {
 
     let valid = true;
@@ -117,28 +117,9 @@ export default function EmployeeComponent() {
 
 
 
-  // 중복 코드를 추출한 함수
-  function saveEmployee(employeeData) {
-    if (id) {
-      updateEmployee(id, employeeData)
-        .then((res) => {
-          console.log(res.data);
-          navigate('/employees');
-        })
-        .catch(error => {
-          console.error(error);
-        });
-    } else {
-      createEmployee(employeeData)
-        .then((res) => {
-          console.log(res.data);
-          navigate('/employees');
-        })
-        .catch(error => {
-          console.error(error);
-        });
-    }
-  }
+
+
+
 
   // 직원 등록 & 수정 핸들러
   function saveOrUpdateEmployee(e) {
@@ -190,16 +171,45 @@ export default function EmployeeComponent() {
 
     // 입력 값들 가지고 등록 처리
     const employeeData = { fullName, department, email: emailToSave };
-    saveEmployee(employeeData);
+    
+
+    // 수정
+    if (id) {
+
+      updateEmployee(id, employeeData)
+        .then((res) => {
+          console.log(res.data);
+          navigate('/employees');
+        })
+        .catch(error => {
+          console.error(error);
+        });
+
+
+    // 등록    
+    } else {
+
+      createEmployee(employeeData)
+        .then((res) => {
+          console.log(res.data);
+          navigate('/employees');
+        })
+        .catch(error => {
+          console.error(error);
+        });
+    }
   }
 
 
 
-  // 이메일 형식 유효성 검사
+
+  // 이메일 형식 유효성 검사 -> aaa@aaa.com 형식인지
   function emailValidateForm(email) {
     const emailRegex = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/;
     return emailRegex.test(email);
   }
+
+
 
 
   // 등록 & 수정 화면 별로 타이틀 헤더 설정
@@ -210,6 +220,9 @@ export default function EmployeeComponent() {
       return <h2 className="text-center mt-3">직원 등록</h2>;
     }
   }
+
+
+
 
   return (
     <div className="container">
