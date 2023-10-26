@@ -3,6 +3,9 @@ import { addTodo, getTodo, updateTodo } from "../services/TodoService";
 import { useNavigate, useParams } from "react-router-dom";
 import { listEmployees } from "../services/EmployeeService";
 import TimePicker from "../components/TimePicker";
+import Calendar from "react-calendar";
+import ReactDatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 
 export default function TodoComponent() {
   const [title, setTitle] = useState("");
@@ -13,6 +16,7 @@ export default function TodoComponent() {
   const [selectedEmployeeCards, setSelectedEmployeeCards] = useState([]); // 선택된 직원 카드 목록 추가
   const [startTime, setStartTime] = useState(""); // 시작 시간
   const [endTime, setEndTime] = useState(""); // 종료 시간
+  const [date, setDate] = useState("");
 
   const navigate = useNavigate();
   const { id } = useParams();
@@ -166,6 +170,15 @@ export default function TodoComponent() {
   }
 
 
+  function handleStartTimeChange(date) {
+    setStartTime(date);
+  }
+
+  function handleEndTimeChange(date) {
+    setEndTime(date);
+  }
+
+
 
 
 
@@ -220,8 +233,8 @@ export default function TodoComponent() {
                     <div className="selected-employee-card">
                         {employeeName}
                         <button
-                        className="remove-button"
-                        onClick={() => removeSelectedEmployeeCard(employeeName)}
+                          className="remove-button"
+                          onClick={() => removeSelectedEmployeeCard(employeeName)}
                         >
                         X
                         </button>
@@ -230,12 +243,13 @@ export default function TodoComponent() {
                 ))}
               </div>
               <div className="form-group mb-2">
-                <label className="form-label mt-4">시작 시간</label>
-                <TimePicker selectedTime={startTime} onChange={setStartTime} />
-              </div>
-              <div className="form-group mb-2">
-                <label className="form-label">종료 시간</label>
-                <TimePicker selectedTime={endTime} onChange={setEndTime} />
+                <label className="form-label mt-4">일정 날짜</label>
+                <ReactDatePicker
+                  selected={date} // 선택된 날짜
+                  onChange={(date) => setDate(date)} // 선택 날짜 변경 핸들러
+                  className="form-control"
+                  dateFormat="yyyy-MM-dd"
+                />
               </div>
               <button
                 className="btn btn-success mt-4 mb-4"
