@@ -2,10 +2,9 @@ import React, { useEffect, useState } from "react";
 import { addTodo, getTodo, updateTodo } from "../services/TodoService";
 import { useNavigate, useParams } from "react-router-dom";
 import { listEmployees } from "../services/EmployeeService";
-import TimePicker from "../components/TimePicker";
-import Calendar from "react-calendar";
 import ReactDatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+
 
 export default function TodoComponent() {
   const [title, setTitle] = useState("");
@@ -14,8 +13,8 @@ export default function TodoComponent() {
   const [employeeNames, setEmployeeNames] = useState([]);
   const [selectedEmployees, setSelectedEmployees] = useState([]);
   const [selectedEmployeeCards, setSelectedEmployeeCards] = useState([]); // 선택된 직원 카드 목록 추가
-  const [startTime, setStartTime] = useState(""); // 시작 시간
-  const [endTime, setEndTime] = useState(""); // 종료 시간
+  const [startTime, setStartTime] = useState("09:00"); // 시작 시간
+  const [endTime, setEndTime] = useState("10:00");
   const [date, setDate] = useState("");
 
   const navigate = useNavigate();
@@ -242,15 +241,42 @@ export default function TodoComponent() {
                     </div>
                 ))}
               </div>
+
+
+              {/* 일정 날짜 */}
               <div className="form-group mb-2">
                 <label className="form-label mt-4">일정 날짜</label>
                 <ReactDatePicker
-                  selected={date} // 선택된 날짜
-                  onChange={(date) => setDate(date)} // 선택 날짜 변경 핸들러
+                  selected={date} 
+                  onChange={(date) => setDate(date)} 
                   className="form-control"
                   dateFormat="yyyy-MM-dd"
                 />
               </div>
+
+              {/* 시작 시간 */}
+              <div className="form-group mb-2">
+                <label className="form-label">시작 시간</label>
+                <input
+                  type="time"
+                  value={startTime}
+                  className="form-control"
+                  onChange={(e) => setStartTime(e.target.value)}
+                />
+              </div>
+
+              {/* 종료 시간 */}
+              <div className="form-group mb-2">
+                <label className="form-label">종료 시간</label>
+                <input
+                  type="time"
+                  value={endTime}
+                  className="form-control"
+                  onChange={(e) => setEndTime(e.target.value)}
+                />
+              </div>
+
+              {/* 저장 버튼 */}
               <button
                 className="btn btn-success mt-4 mb-4"
                 style={{ width: "100%" }}
