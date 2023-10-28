@@ -19,20 +19,17 @@ export default function LoginComponent() {
 
         e.preventDefault();
 
-        // 아이디, 비번 필드 값 변경 시 에러 메시지 초기화
+        // 필드 값 변경 시 에러 메시지 초기화
         setUsernameError("");
         setPasswordError("");
         setLoginError("");
 
         const loginObj = { username, password }
-
         console.log(loginObj);
-
 
 
         // 핸들러
         await loginAPICall(username, password)
-            
         
             // 성공
             .then((res) => {
@@ -54,6 +51,8 @@ export default function LoginComponent() {
             // 실패
             .catch(error => {
 
+
+              // 없는 아이디나 비번 입력 에러
               if (error.response && error.response.status === 401) {
 
                 // 아이디, 비번 모두 입력 되었을 때만 에러 메세지 표시
@@ -62,15 +61,19 @@ export default function LoginComponent() {
                 }
               }
 
+
+              // 아이디, 비번 필드 값 모두 비었을 때 아이디 에러 메세지만 표시
               if (!username && !password) {
                 setUsernameError("아이디를 입력하세요");
                 return;
               }
 
+              // 아이디 필드 값 비었을 때
               if (!username) {
                 setUsernameError("아이디를 입력하세요");
               }
 
+              // 비번 필드 값 비었을 때
               if (!password) {
                 setPasswordError("비밀번호를 입력하세요");
               }
